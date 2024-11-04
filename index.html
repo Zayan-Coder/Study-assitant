@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="manifest" href="/manifest.json">
+  <link rel="manifest" href="manifest.json">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>STUDY-ASSISTANT</title>
@@ -322,7 +322,7 @@
 
     // Register service worker
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/worker.js').then(() => {
+      navigator.serviceWorker.register('worker.js').then(() => {
         console.log('Service Worker Registered');
       });
     }
