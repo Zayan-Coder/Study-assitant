@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Calculator</title>
+    <style>
+        * {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.calculator {
+  background-color: #f2f2f2;
+  padding: 20px;
+  max-width: 400px;
+  margin: 0 auto;
+  border: solid 1px #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  margin-top: 40px;
+}
+
+#result {
+    width: 100%;
+    padding: 10px;
+    font-size: 24px;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3) inset;
+    border-radius: 5px;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px;
+    font-size: 20px;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #ddd;
+}
+
+.clear {
+    background-color: #ff4136;
+    color: #fff;
+}
+
+.number, .decimal {
+    background-color: #fff;
+    color: #333;
+}
+
+.operator {
+    background-color: #0074d9;
+    color: #fff;
+}
+
+.memory {
+    background-color: #ff851b;
+    color: #fff;
+}
+
+.equals {
+    background-color: #01ff70;
+    grid-row: span 3;
+    color: #fff;
+}
+    </style>
+
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" id="result" readonly>
+        <div class="buttons">
+            <button class="clear">C</button>
+            <button class="operator">/</button>
+            <button class="operator">*</button>
+            <button class="operator">-</button>
+            <button class="number">7</button>
+            <button class="number">8</button>
+            <button class="number">9</button>
+            <button class="operator">+</button>
+            <button class="number">4</button>
+            <button class="number">5</button>
+            <button class="number">6</button>
+            <button class="equals">=</button>
+            <button class="number">1</button>
+            <button class="number">2</button>
+            <button class="number">3</button>
+            <button class="number">0</button>
+            <button class="decimal">.</button>
+            <button class="operator">%</button>
+            <button class="operator">√</button>
+            <button class="operator">^</button>
+            <button class="operator">log</button>
+            <button class="operator">ln</button>
+            <button class="operator">sin</button>
+            <button class="operator">cos</button>
+            <button class="operator">tan</button>
+            <button class="operator">!</button>
+            <button class="memory">MC</button>
+            <button class="memory">MR</button>
+            <button class="memory">M+</button>
+        </div>
+    </div>
+
+<script>
+        const buttonsEl = document.querySelectorAll("button");
+const inputFieldEl = document.getElementById("result");
+
+let memory = 0;
+
+for (let i = 0; i < buttonsEl.length; i++) {
+  buttonsEl[i].addEventListener("click", () => {
+    const buttonValue = buttonsEl[i].textContent;
+    if (buttonValue === "C") {
+      clearResult();
+    } else if (buttonValue === "=") {
+      calculateResult();
+    } else if (buttonValue === "√") {
+      calculateSquareRoot();
+    } else if (buttonValue === "^") {
+      appendValue("**");
+    } else if (buttonValue === "%") {
+      calculatePercentage();
+    } else if (buttonValue === "log") {
+      calculateLogarithm();
+    } else if (buttonValue === "ln") {
+      calculateNaturalLog();
+    } else if (buttonValue === "sin") {
+      calculateTrig("sin");
+    } else if (buttonValue === "cos") {
+      calculateTrig("cos");
+    } else if (buttonValue === "tan") {
+      calculateTrig("tan");
+    } else if (buttonValue === "!") {
+      calculateFactorial();
+    } else if (buttonValue === "MC") {
+      memoryClear();
+    } else if (buttonValue === "MR") {
+      memoryRecall();
+    } else if (buttonValue === "M+") {
+      memoryAdd();
+    } else {
+      appendValue(buttonValue);
+    }
+  });
+}
+
+function clearResult() {
+  inputFieldEl.value = "";
+}
+
+function calculateResult() {
+  try {
+    inputFieldEl.value = eval(inputFieldEl.value);
+  } catch (e) {
+    inputFieldEl.value = "Error";
+  }
+}
+
+function appendValue(buttonValue) {
+  inputFieldEl.value += buttonValue;
+}
+
+// Additional operator functions
+function calculateSquareRoot() {
+  inputFieldEl.value = Math.sqrt(eval(inputFieldEl.value));
+}
+
+function calculatePercentage() {
+  inputFieldEl.value = eval(inputFieldEl.value) / 100;
+}
+
+function calculateLogarithm() {
+  inputFieldEl.value = Math.log10(eval(inputFieldEl.value));
+}
+
+function calculateNaturalLog() {
+  inputFieldEl.value = Math.log(eval(inputFieldEl.value));
+}
+
+function calculateTrig(functionName) {
+  const valueInRadians = eval(inputFieldEl.value) * (Math.PI / 180); // Convert degrees to radians
+  inputFieldEl.value = Math[functionName](valueInRadians);
+}
+
+function calculateFactorial() {
+  const num = eval(inputFieldEl.value);
+  let result = 1;
+  for (let i = 1; i <= num; i++) {
+    result *= i;
+  }
+  inputFieldEl.value = result;
+}
+
+// Memory functions
+function memoryClear() {
+  memory = 0;
+}
+
+function memoryRecall() {
+  inputFieldEl.value += memory;
+}
+
+function memoryAdd() {
+  memory += parseFloat(eval(inputFieldEl.value));
+    }
+               </script>
+</body>
+</html>

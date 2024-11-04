@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="manifest" href="/manifest.json">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STUDY-ASSISTANT</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    .container {
+      position: fixed;
+      bottom: 2.1cm;
+      left: 1.2cm;
+      z-index: 100;
+    }
+
+    .iframe-button {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+    }
+
+    .iframe-button img {
+      width: 70px;
+      height: 70px;
+    }
+
+    .iframe-container {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 80%;
+      height: 80%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 2000;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .iframe-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+    }
+
+    .close-button img {
+      width: 30px;
+      height: 30px;
+    }
+
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    /* background */
+    
+    .bg-image {
+      background-image: url('main/bg.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      height: 100vh;
+      width: 100vw;
+      display: none;
+    }
+ /* ball */
+    #ball {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background-image: url('images/ball.png');
+      background-size: cover;
+      border-radius: 50%;
+      cursor: pointer;
+      top: 100px;
+      left: 100px;
+      transition: 0.3s;
+      z-index: 100;
+    }
+
+    /* youtube button position */
+    #YouTubeButtonContainer {
+      bottom: 2.1cm;
+      left: 4.3cm;
+    }
+
+      /* Settings button position */
+      #settingsButtonContainer {
+        position: absolute;
+        bottom: 2.1cm;
+        left: 7cm;
+      }
+  </style>
+</head>
+<body>
+  <!-- youtube -->
+  <div class="container" id="YouTubeButtonContainer">
+    <button id="openYouTubeIframe" class="iframe-button">
+      <img src="images/YouTube .png" alt="YouTube" />
+    </button>
+  </div>
+
+  <div id="youTubeIframeContainer" class="iframe-container">
+    <button id="closeYouTubeIframe" class="close-button">
+      <img src="images/Close.png" alt="Close" />
+    </button>
+    <iframe src="main/youtube.html"></iframe>
+  </div>
+  
+  <!-- gogle -->
+
+  <div class="container">
+    <button id="openIframe" class="iframe-button">
+      <img src="images/Google.png" alt="Google Button" />
+    </button>
+  </div>
+
+  <div id="iframeContainer" class="iframe-container">
+    <button id="closeIframe" class="close-button">
+      <img src="images/Close.png" alt="Close" />
+    </button>
+    <iframe src="main/GOOGLE.html"></iframe>
+  </div>
+
+  <!-- maths -->
+  <style>
+    /* Maths button position */
+    #mathsButtonContainer {
+      position: absolute;
+      top: 2.4cm;
+      left: 5cm;
+    }
+  </style>
+
+  <div class="container" id="mathsButtonContainer">
+    <button id="openmathsIframe" class="iframe-button">
+      <img src="images/Maths.png" alt="Maths" />
+    </button>
+  </div>
+
+  <div id="mathsIframeContainer" class="iframe-container" style="display: none;">
+    <button id="closemathsIframe" class="close-button">
+      <img src="images/Close.png" alt="Close" />
+    </button>
+    <iframe src="appdata/maths/calculator.html" frameborder="0"></iframe>
+  </div>
+
+  <script>
+    // Maths Iframe Button and Container
+    document.getElementById('openmathsIframe').onclick = function() {
+      document.getElementById('mathsIframeContainer').style.display = 'block';
+      document.getElementById('openmathsIframe').style.display = 'none';
+    };
+
+    document.getElementById('closemathsIframe').onclick = function() {
+      document.getElementById('mathsIframeContainer').style.display = 'none';
+      document.getElementById('openmathsIframe').style.display = 'block';
+    };
+  </script>
+  <!-- settings -->
+ 
+  <div class="container" id="settingsButtonContainer">
+    <button id="openSettingsIframe" class="iframe-button">
+      <img src="images/Settings.png" alt="Settings" />
+    </button>
+  </div>
+
+  <div id="settingsIframeContainer" class="iframe-container" style="display: none;">
+    <button id="closeSettingsIframe" class="close-button">
+      <img src="images/Close.png" alt="Close" />
+    </button>
+    <iframe src="main/settings.html" frameborder="0"></iframe>
+  </div>
+
+  <script>
+    // Settings Iframe Button and Container
+    document.getElementById('openSettingsIframe').onclick = function() {
+      document.getElementById('settingsIframeContainer').style.display = 'block';
+      document.getElementById('openSettingsIframe').style.display = 'none';
+    };
+
+    document.getElementById('closeSettingsIframe').onclick = function() {
+      document.getElementById('settingsIframeContainer').style.display = 'none';
+      document.getElementById('openSettingsIframe').style.display = 'block';
+    };
+  </script>
+  <!-- loding screen  -->
+  <div class="loading-screen">
+    <img src="main/Loding.gif" alt="Loading..." />
+  </div>
+
+  <div class="bg-image" id="main-content">
+    <div class="content"></div>
+  </div>
+
+  <!-- Ball Element -->
+  <div id="ball"></div>
+
+  <div id="ballIframeContainer" class="iframe-container">
+    <button id="closeBallIframe" class="close-button">
+      <img src="images/Close.png" alt="Close" />
+    </button>
+    <iframe src="main/AI.html"></iframe>
+  </div>
+
+  <script>
+    // Show iframe when the ball is clicked
+    ball.addEventListener('click', () => {
+      document.getElementById('ballIframeContainer').style.display = 'block';
+    });
+
+    // Close ball iframe functionality
+    document.getElementById('closeBallIframe').onclick = function() {
+      document.getElementById('ballIframeContainer').style.display = 'none';
+    };
+  </script>
+
+  <script>
+    // Show loading screen for 5 seconds
+    setTimeout(() => {
+      document.querySelector('.loading-screen').style.display = 'none';
+      document.getElementById('main-content').style.display = 'block';
+    }, 5000);
+
+    // YouTube Iframe Button and Container
+    document.getElementById('openYouTubeIframe').onclick = function() {
+      document.getElementById('youTubeIframeContainer').style.display = 'block';
+      this.style.display = 'none';
+    };
+
+    document.getElementById('closeYouTubeIframe').onclick = function() {
+      document.getElementById('youTubeIframeContainer').style.display = 'none';
+      document.getElementById('openYouTubeIframe').style.display = 'block';
+    };
+
+    // Open and close iframe on button click for Google
+    document.getElementById('openIframe').onclick = function() {
+      document.getElementById('iframeContainer').style.display = 'block';
+      this.style.display = 'none';
+    };
+
+    document.getElementById('closeIframe').onclick = function() {
+      document.getElementById('iframeContainer').style.display = 'none';
+      document.getElementById('openIframe').style.display = 'block';
+    };
+
+    // Ball drag functionality
+    let offsetX, offsetY;
+    const ball = document.getElementById('ball');
+
+    // Start dragging
+    function startDragging(e) {
+      offsetX = e.clientX - ball.getBoundingClientRect().left;
+      offsetY = e.clientY - ball.getBoundingClientRect().top;
+      document.addEventListener('mousemove', moveBall);
+    }
+
+    // Stop dragging
+    function stopDragging() {
+      document.removeEventListener('mousemove', moveBall);
+    }
+
+    // Move ball function
+    function moveBall(e) {
+      ball.style.left = `${e.clientX - offsetX}px`;
+      ball.style.top = `${e.clientY - offsetY}px`;
+    }
+
+    ball.addEventListener('mousedown', startDragging);
+    document.addEventListener('mouseup', stopDragging);
+
+    // Mobile touch events
+    ball.addEventListener('touchstart', (e) => {
+      const touch = e.touches[0];
+      offsetX = touch.clientX - ball.getBoundingClientRect().left;
+      offsetY = touch.clientY - ball.getBoundingClientRect().top;
+      document.addEventListener('touchmove', moveBallMobile);
+    });
+
+    document.addEventListener('touchend', () => {
+      document.removeEventListener('touchmove', moveBallMobile);
+    });
+
+    function moveBallMobile(e) {
+      const touch = e.touches[0];
+      ball.style.left = `${touch.clientX - offsetX}px`;
+      ball.style.top = `${touch.clientY - offsetY}px`;
+    }
+
+    // Show iframe when the ball is clicked
+    ball.addEventListener('click', () => {
+      document.getElementById('ballIframeContainer').style.display = 'block';
+    });
+
+    // Register service worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/worker.js').then(() => {
+        console.log('Service Worker Registered');
+      });
+    }
+  </script>
+</body>
+</html>
